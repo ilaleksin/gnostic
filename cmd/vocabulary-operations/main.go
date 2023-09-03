@@ -22,7 +22,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/golang/protobuf/proto"
+	"google.golang.org/protobuf/proto"
 
 	metrics "github.com/google/gnostic/metrics"
 	vocabulary "github.com/google/gnostic/metrics/vocabulary"
@@ -83,9 +83,7 @@ func processInputs(args []string, stdinFlag bool) []*metrics.Vocabulary {
 		return v
 	default:
 		files := make([]string, 0)
-		for _, arg := range args {
-			files = append(files, arg)
-		}
+		files = append(files, arg...)
 		for _, file := range files {
 			v = append(v, readVocabularyFromFilename(file))
 		}

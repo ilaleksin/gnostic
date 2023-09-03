@@ -11,8 +11,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/ptypes/any"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/anypb"
 
 	discovery "github.com/google/gnostic/discovery"
 	openapiv2 "github.com/google/gnostic/openapiv2"
@@ -136,7 +136,7 @@ When the -plugin option is specified, these flags are ignored.`)
 			return env, err
 		}
 		// If we get here, we don't know what we got
-		err = errors.New("Unrecognized format for input")
+		err = errors.New("unrecognized format for input")
 		return env, err
 	}
 	return env, err
@@ -166,7 +166,7 @@ func (env *Environment) RespondAndExit() {
 
 func HandleResponse(response *Response, outputLocation string) error {
 	if response.Errors != nil {
-		return fmt.Errorf("Plugin error: %+v", response.Errors)
+		return fmt.Errorf("plugin error: %+v", response.Errors)
 	}
 
 	// Write files to the specified directory.
@@ -200,7 +200,7 @@ func HandleResponse(response *Response, outputLocation string) error {
 
 func (request *Request) AddModel(modelType string, model proto.Message) error {
 	modelBytes, err := proto.Marshal(model)
-	request.Models = append(request.Models, &any.Any{TypeUrl: modelType, Value: modelBytes})
+	request.Models = append(request.Models, &anypb.Any{TypeUrl: modelType, Value: modelBytes})
 	return err
 }
 
