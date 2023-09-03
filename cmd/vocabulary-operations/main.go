@@ -83,7 +83,9 @@ func processInputs(args []string, stdinFlag bool) []*metrics.Vocabulary {
 		return v
 	default:
 		files := make([]string, 0)
-		files = append(files, arg...)
+		for _, arg := range args {
+			files = append(files, arg)
+		}
 		for _, file := range files {
 			v = append(v, readVocabularyFromFilename(file))
 		}
